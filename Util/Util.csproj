@@ -54,6 +54,7 @@
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
     <Reference Include="System.Web" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
@@ -94,6 +95,10 @@
     <Compile Include="Security\Md5Helper.cs" />
     <Compile Include="String\Const.cs" />
     <Compile Include="String\Str.cs" />
+    <Compile Include="System\ComputeHelper.cs" />
+    <Compile Include="System\SystemInfo.cs" />
+    <Compile Include="System\Win32Helper.cs" />
+    <Compile Include="System\WindowsVersionDetector.cs" />
     <Compile Include="Time\Time.cs" />
     <Compile Include="Tree\TreeDataMake.cs" />
     <Compile Include="Tree\TreeModel.cs" />
