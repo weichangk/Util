@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Text;
 
 namespace Util
@@ -121,6 +122,63 @@ namespace Util
                 return "";
             str = str.Substring(0, str.Length - Length);
             return str;
+        }
+        #endregion
+
+        #region 版本号
+        /// <summary>
+        /// 获取本地版本
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalVersion(string filePath)
+        {
+            FileInfo fi = new FileInfo(filePath);
+            System.Diagnostics.FileVersionInfo mfv = System.Diagnostics.FileVersionInfo.GetVersionInfo(filePath);
+            return mfv.Comments;
+        }
+
+        /// <summary>
+        /// 获取本地版本
+        /// </summary>
+        /// <returns></returns>
+        public static string GetLocalVersion()
+        {
+            System.Reflection.Assembly ma = System.Reflection.Assembly.GetEntryAssembly();
+            return GetLocalVersion(ma.Location);
+        }
+
+        /// <summary>
+        /// 版本号检测
+        /// </summary>
+        /// <param name="severV"></param>
+        /// <param name="localV"></param>
+        /// <returns></returns>
+        public static bool CheckVersion(string versionIndex, string severV, string localV)
+        {
+            severV = severV.Replace(versionIndex, string.Empty).Replace(" ", string.Empty).Trim();
+            localV = localV.Replace(versionIndex, string.Empty).Replace(" ", string.Empty).Trim();
+            if (string.IsNullOrEmpty(severV))// || string.IsNullOrEmpty(localV))
+                return false;
+
+            if (CommonHelper.TryInt(severV, 0) > CommonHelper.TryInt(localV, 0))
+                return true;
+
+            return false;
+        }
+        private static int TryInt(object obj, int defInt)
+        {
+            int inttemp = 0;
+            if (obj == null || obj == DBNull.Value || obj.Equals(string.Empty))
+                return defInt;
+            obj = obj.ToString().Replace("￥", "").Replace("$", "");
+            if (obj.ToString().Contains("."))
+            {
+                obj = float.Parse(obj.ToString());
+            }
+            if (Int32.TryParse(obj.ToString(), out inttemp))
+                return inttemp;
+            else
+                return defInt;
         }
         #endregion
     }
