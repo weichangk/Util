@@ -581,5 +581,36 @@ namespace Util
             SetLocalTime(ref st);
         }
         #endregion
+
+        #region 获取最后一次键盘或鼠标操作的时间
+        // 创建结构体用于返回捕获时间
+        [System.Runtime.InteropServices.StructLayout(System.Runtime.InteropServices.LayoutKind.Sequential)]
+        struct LASTINPUTINFO
+        {
+            // 设置结构体块容量
+            [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
+            public int cbSize;
+            // 捕获的时间
+            [System.Runtime.InteropServices.MarshalAs(System.Runtime.InteropServices.UnmanagedType.U4)]
+            public uint dwTime;
+        }
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern bool GetLastInputInfo(ref LASTINPUTINFO plii);
+
+        /// <summary>
+        /// 获取最后一次键盘或鼠标操作的时间
+        /// </summary>
+        /// <returns></returns>
+        public static long GetLastInputTime()
+        {
+            LASTINPUTINFO vLastInputInfo = new LASTINPUTINFO();
+            vLastInputInfo.cbSize = System.Runtime.InteropServices.Marshal.SizeOf(vLastInputInfo);
+            // 捕获时间
+            if (!GetLastInputInfo(ref vLastInputInfo))
+                return 0;
+
+            return Environment.TickCount - (long)vLastInputInfo.dwTime;
+        }
+        #endregion
     }
 }
