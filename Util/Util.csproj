@@ -68,6 +68,7 @@
     <Compile Include="Attributes\EnumAttribute.cs" />
     <Compile Include="Common\CommonHelper.cs" />
     <Compile Include="Config\Config.cs" />
+    <Compile Include="Convert\ConvertHelper.cs" />
     <Compile Include="CSV\CSVHelper.cs" />
     <Compile Include="Excel\XlsIOHelper.cs" />
     <Compile Include="Exception\ExceptionEx.cs" />
