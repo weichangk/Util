@@ -238,5 +238,85 @@ namespace Util
         //}
 
         //#endregion
+
+        #region TripleDESCryptoServiceProvider
+        //12个字符  
+        const string _customIV = "8vZKRj5yfzU=";
+        //32个字符  
+        const string _customKey = "l1is9ooXLf772Z+Aht9DdpQGoa3+SA7f";
+
+        /// <summary>  
+        /// 加密字符串  
+        /// </summary>  
+        /// <param name="data"></param>  
+        /// <returns></returns>  
+        public static string TripleDESEncrypt(string strData)
+        {
+            try
+            {
+                string encryptPassword = string.Empty;
+
+                SymmetricAlgorithm algorithm = new TripleDESCryptoServiceProvider();
+                algorithm.Key = Convert.FromBase64String(_customKey);
+                algorithm.IV = Convert.FromBase64String(_customIV);
+                algorithm.Mode = CipherMode.ECB;
+                algorithm.Padding = PaddingMode.PKCS7;
+
+                ICryptoTransform transform = algorithm.CreateEncryptor();
+
+                byte[] data = (new System.Text.ASCIIEncoding()).GetBytes(strData);
+                MemoryStream memoryStream = new MemoryStream();
+                CryptoStream cryptoStream = new CryptoStream(memoryStream, transform, CryptoStreamMode.Write);
+
+                cryptoStream.Write(data, 0, data.Length);
+                cryptoStream.FlushFinalBlock();
+                encryptPassword = Convert.ToBase64String(memoryStream.ToArray());
+
+                memoryStream.Close();
+                cryptoStream.Close();
+
+                return encryptPassword;
+            }
+            catch { }
+
+            return "";
+        }
+
+        /// <summary>  
+        /// 解密字符串  
+        /// </summary>  
+        /// <param name="password"></param>  
+        /// <returns></returns>  
+        public static string TripleDESDecrypt(string data)
+        {
+            try
+            {
+                string decryptPassword = string.Empty;
+
+                SymmetricAlgorithm algorithm = new TripleDESCryptoServiceProvider();
+                algorithm.Key = Convert.FromBase64String(_customKey);
+                algorithm.IV = Convert.FromBase64String(_customIV);
+                algorithm.Mode = CipherMode.ECB;
+                algorithm.Padding = PaddingMode.PKCS7;
+
+                ICryptoTransform transform = algorithm.CreateDecryptor(algorithm.Key, algorithm.IV);
+
+                byte[] buffer = Convert.FromBase64String(data);
+                MemoryStream memoryStream = new MemoryStream(buffer);
+                CryptoStream cryptoStream = new CryptoStream(memoryStream, transform, CryptoStreamMode.Read);
+                StreamReader reader = new StreamReader(cryptoStream, System.Text.Encoding.ASCII);
+                decryptPassword = reader.ReadToEnd();
+
+                reader.Close();
+                cryptoStream.Close();
+                memoryStream.Close();
+
+                return decryptPassword;
+            }
+            catch { }
+
+            return "";
+        }
+        #endregion
     }
 }
