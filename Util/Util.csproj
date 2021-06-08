@@ -93,6 +93,7 @@
     <Compile Include="Mail\Model\MailModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Security\DESEncrypt.cs" />
+    <Compile Include="Security\EncryptHelper.cs" />
     <Compile Include="Security\Md5Helper.cs" />
     <Compile Include="String\Const.cs" />
     <Compile Include="String\Str.cs" />
@@ -100,6 +101,7 @@
     <Compile Include="System\SystemInfo.cs" />
     <Compile Include="System\Win32Helper.cs" />
     <Compile Include="System\WindowsVersionDetector.cs" />
+    <Compile Include="Time\DateTimeHelper.cs" />
     <Compile Include="Time\Time.cs" />
     <Compile Include="Tree\TreeDataMake.cs" />
     <Compile Include="Tree\TreeModel.cs" />
