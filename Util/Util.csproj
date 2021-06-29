@@ -78,6 +78,7 @@
     <Compile Include="Extensions\Extensions.Json.cs" />
     <Compile Include="Extensions\Extensions.List.cs" />
     <Compile Include="Extensions\Extensions.Nullable.cs" />
+    <Compile Include="Extensions\Extensions.Delegate.cs" />
     <Compile Include="Extensions\Extensions.Validate.cs" />
     <Compile Include="File\DirFileHelper.cs" />
     <Compile Include="File\FileDownHelper.cs" />
@@ -109,6 +110,7 @@
     <Compile Include="XML\Xml.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\Extensions.String.cs" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
